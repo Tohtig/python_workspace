@@ -1,24 +1,20 @@
 # -*- coding: utf-8 -*-
+import unittest
 from selenium.webdriver.firefox.webdriver import WebDriver
-from contact import Contact
-import time, unittest
+from model.contact import Contact
 
-def is_alert_present(wd):
-    try:
-        wd.switch_to_alert().text
-        return True
-    except:
-        return False
 
 class test_add_contact(unittest.TestCase):
     def setUp(self):
         self.wd = WebDriver()
         self.wd.implicitly_wait(60)
     
-    def logout(self, wd):
+    def logout(self):
+        wd = self.wd
         wd.find_element_by_link_text("Logout").click()
 
-    def add_new_contact(self, wd, contact):
+    def add_new_contact(self, contact):
+        wd = self.wd
         wd.find_element_by_link_text("add new").click()
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
@@ -54,7 +50,8 @@ class test_add_contact(unittest.TestCase):
         wd.find_element_by_name("byear").send_keys(contact.byear)
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
 
-    def login(self, wd):
+    def login(self):
+        wd = self.wd
         wd.find_element_by_name("user").click()
         wd.find_element_by_name("user").clear()
         wd.find_element_by_name("user").send_keys("admin")
@@ -63,18 +60,17 @@ class test_add_contact(unittest.TestCase):
         wd.find_element_by_name("pass").send_keys("secret")
         wd.find_element_by_xpath("//form[@id='LoginForm']/input[3]").click()
 
-    def open_home_page(self, wd):
+    def open_home_page(self):
+        wd = self.wd
         wd.get("http://localhost/addressbook/index.php")
 
     def test_test_add_contact(self):
-        success = True
         wd = self.wd
-        self.open_home_page(wd)
-        self.login(wd)
-        self.add_new_contact(wd, Contact(firstname="Ёжик", middlename="Ежов", lastname="Грибанов", nickname="Мачо", home_phone="zadarma.com", adress="Лес", mobile="нет розетки",
+        self.open_home_page()
+        self.login()
+        self.add_new_contact(Contact(firstname="Ёжик", middlename="Ежов", lastname="Грибанов", nickname="Мачо", home_phone="zadarma.com", adress="Лес", mobile="нет розетки",
                              work_phone="в лесу телефона нет", fax="пришлите с Печкиным", byear="1988"))
-        self.logout(wd)
-        self.assertTrue(success)
+        self.logout()
 
     def tearDown(self):
         self.wd.quit()
