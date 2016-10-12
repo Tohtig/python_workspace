@@ -11,7 +11,8 @@ class GroupHelper:
         wd = self.app.wd
         self.open_groups_page()
         # init group creation
-        wd.find_element_by_xpath("//div[@id='content']/form/input[4]").click()
+        # wd.find_element_by_xpath("//div[@id='content']/form/input[4]").click()
+        wd.find_element_by_xpath("//input[@name='new']").click()
         # fill group form
         wd.find_element_by_name("group_name").click()
         wd.find_element_by_name("group_name").clear()
