@@ -8,7 +8,7 @@ class Application:
 
     def __init__(self):
         self.wd = WebDriver()
-        self.wd.implicitly_wait(5)
+        # self.wd.implicitly_wait(5) # Генератор скриптов делает задержку для ожидания подгрузки элементов с Динамической страницы
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
         self.contact = ContactHelper(self)
@@ -22,6 +22,8 @@ class Application:
 
     def open_home_page(self):
         wd = self.wd
+        if wd.current_url.endswith("/addressbook/"):
+            return
         wd.get("http://localhost/addressbook/")
 
     def destroy(self):

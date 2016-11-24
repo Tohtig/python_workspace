@@ -17,6 +17,7 @@ class ContactHelper:
         self.change_field_value("byear", contact.byear)
         # wd.find_element_by_xpath("//input[@name='submit']").click()
         wd.find_element_by_name("submit").click()
+        self.app.open_home_page()
 
     def change_field_value(self, field_name, text):
         wd = self.app.wd
@@ -37,6 +38,7 @@ class ContactHelper:
         self.change_field_value("fax", contact.fax)
         self.change_field_value("byear", contact.byear)
         wd.find_element_by_xpath("//input[@value='Update']").click()
+        self.app.open_home_page()
 
     def delete_first_contact(self):
         wd = self.app.wd
